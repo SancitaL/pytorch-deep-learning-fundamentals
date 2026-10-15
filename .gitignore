@@ -11,3 +11,6 @@ venv/
 
 # Python environment variables
 .env
+
+# test file
+test.py
