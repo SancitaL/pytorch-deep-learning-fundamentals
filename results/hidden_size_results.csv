@@ -1,0 +1,4 @@
+model,hidden1,hidden2,parameters,train_loss,train_accuracy,val_loss,val_accuracy
+Small,128,64,109386,0.2541,0.9056,0.3317,0.8826
+Baseline,256,128,235146,0.2374,0.9112,0.3001,0.8884
+Large,512,256,535818,0.2262,0.9143,0.2998,0.8953

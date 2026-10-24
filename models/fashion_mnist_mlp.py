@@ -2,17 +2,17 @@ import torch
 from torch import nn
 
 class FashionMNISTMLP(nn.Module):
-    def __init__(self):
+    def __init__(self,hidden1=256,hidden2=128):
         super().__init__()
         self.flatten = nn.Flatten()
 
-        self.fc1 = nn.Linear(784, 256)
+        self.fc1 = nn.Linear(784, hidden1)
         self.relu1 = nn.ReLU()
 
-        self.fc2 = nn.Linear(256, 128)
+        self.fc2 = nn.Linear(hidden1, hidden2)
         self.relu2 = nn.ReLU()
 
-        self.fc3 = nn.Linear(128, 10)
+        self.fc3 = nn.Linear(hidden2, 10)
 
     def forward(self, x):
         x = self.flatten(x)
@@ -24,19 +24,19 @@ class FashionMNISTMLP(nn.Module):
         return x
 
 if __name__ == "__main__":
-    torch.manual_seed(42)
+    for hidden1, hidden2 in [
+        (128,64),
+        (256,128),
+        (512,256)
+    ]:
+        model = FashionMNISTMLP(hidden1,hidden2)
+        sample = torch.randn(64,1,28,28)
+        output = model(sample)
 
-    model = FashionMNISTMLP()
+        total_p = sum(p.numel() for p in model.parameters())
 
-    sample = torch.randn(64,1,28,28)  # Batch of 64 images, 1 channel, 28x28 pixels
-    output = model(sample)
-
-    total_params = sum(
-        p.numel() for p in model.parameters()
-
+        print(
+        f"Hidden: ({hidden1}, {hidden2}) | "
+        f"Output: {tuple(output.shape)} | "
+        f"Parameters: {total_p:,}"
     )
-
-    print(model)
-    print("Input Shape:", sample.shape)
-    print("Output Shape:", output.shape)
-    print("Total Parameters:", total_params)
