@@ -1,0 +1,2 @@
+checkpoint_epoch,test_samples,test_loss,test_accuracy
+10,10000,0.3293,0.8823
